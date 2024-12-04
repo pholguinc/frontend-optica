@@ -1,0 +1,97 @@
+<div
+  id="menu"
+  class="absolute left-0 top-0 z-9999 flex h-screen w-full md:w-96 flex-col overflow-y-hidden bg-gray-900 md:block transform transition-transform duration-300 ease-in-out dark:bg-boxdark"
+  [ngClass]="{
+    'translate-x-0': isSidebarOpen,
+    '-translate-x-full': !isSidebarOpen,
+    'md:translate-x-0': true,
+  }"
+>
+  <div class="px-6 py-3 pt-8">
+    <p class="text-slate-500 mt-0 mb-4">Welcome back,</p>
+    <a class="inline-flex space-x-2 items-center">
+      <span>
+        <img
+          class="rounded-full w-8 h-8"
+          src="https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=128&q=80"
+          alt=""
+        />
+      </span>
+      <span class="text-sm md:text-base font-bold text-white"
+        >Edward Tompson</span
+      >
+    </a>
+  </div>
+  <div class="w-full">
+    @for (menu of menus; track $index) {
+    <ng-container>
+
+
+      @if(menu.isSubmenu){
+        <ng-container>
+          <div class="relative">
+            <button
+              class="w-full px-4 inline-flex space-x-6 items-center border-b border-slate-700 py-3 hover:bg-blue-800 transition ease-linear duration-150 text-white"
+              (click)="toggleDropdown(menu)"
+              [ngClass]="{ 'bg-blue-800': isMenuActive(menu) }"
+            >
+              <fa-icon
+                [icon]="menu.icon || dashboard"
+                class="text-white ml-2 text-xl"
+              ></fa-icon>
+              <div class="flex flex-row justify-between items-center w-full">
+                <span class="text-md text-slate-300 font-bold leading-5">{{
+                  menu.title
+                }}</span>
+                <fa-icon [icon]="isDropdownOpen ? open : close"></fa-icon>
+              </div>
+            </button>
+            @if(menu.isOpen){
+
+            <ul class="bg-slate-800 text-slate-300 space-y-2">
+              @for (child of menu.children; track $index) {
+              <ng-container>
+                <li>
+                  <a
+                    [routerLink]="child.link"
+                    routerLinkActive="bg-white/5"
+                    [routerLinkActiveOptions]="{ exact: true }"
+                    class="block px-4 py-3 pl-4 hover:bg-white/5"
+                  >
+                    <fa-icon [icon]="right" class="ml-2"></fa-icon>
+                    <span class="ml-6">{{ child.title }}</span>
+                  </a>
+                </li>
+              </ng-container>
+              }
+            </ul>
+
+            }
+          </div>
+        </ng-container>
+      }@else {
+
+        <ng-container>
+        <a
+          [routerLink]="menu.link"
+          [routerLinkActive]="isMenuActive(menu) ? 'bg-blue-800' : ''"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="w-full px-4 inline-flex space-x-6 items-center border-b border-slate-700 py-3 hover:bg-blue-800 transition ease-linear duration-150 text-white"
+        >
+          <fa-icon
+            [icon]="menu.icon || dashboard"
+            class="text-white ml-2 text-xl"
+          ></fa-icon>
+          <div class="flex flex-col">
+            <span class="text-md font-bold leading-5 text-white">{{
+              menu.title
+            }}</span>
+          </div>
+        </a>
+      </ng-container>
+
+      }
+    </ng-container>
+    }
+  </div>
+</div>

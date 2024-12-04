@@ -1,0 +1,17 @@
+<div class="bg-slate-100 antialiased text-gray-900 selection:bg-blue-600 selection:text-white overflow-hidden">
+  <div class="flex flex-col md:flex-row relative h-screen">
+    <app-sidebar></app-sidebar>
+
+
+    <main class="flex-1 h-full ml-0">
+      <app-navbar></app-navbar>
+
+      <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10 ml-0 md:ml-96">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
+</div>
+
+
+
